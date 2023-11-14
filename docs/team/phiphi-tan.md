@@ -31,9 +31,7 @@ Given below are my contributions to the project.
     gives the app a more 'polished' feel and improves the general user experience
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=phiphi-tan&breakdown=true)
-
-* **Project management**:
-  * To be added soon.
+<div style="page-break-after: always;"></div>
 
 * **Enhancements to existing features**:
   * **UI Enhancements**: Compared to AB3, making the following UI enhancements greatly improves the UI/UX of our application.
@@ -60,7 +58,7 @@ Given below are my contributions to the project.
   * Modified existing test cases and added new tests (PRs [#249](https://github.com/AY2324S1-CS2103T-W15-4/tp/pull/249),
     [#264](https://github.com/AY2324S1-CS2103T-W15-4/tp/pull/264), [#265](https://github.com/AY2324S1-CS2103T-W15-4/tp/pull/265),
     [#274](https://github.com/AY2324S1-CS2103T-W15-4/tp/pull/274)).
-
+<div style="page-break-after: always;"></div>
 
 * **Documentation**:
   * User Guide:
