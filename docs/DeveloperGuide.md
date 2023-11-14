@@ -7,6 +7,7 @@
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always"></div>
 
 ## **Acknowledgements**
 
@@ -168,7 +169,7 @@ The `Model` component,
 * stores the currently 'selected' `Course` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Course>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores the currently 'selected course's' `Student` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own).
 
 <div style="page-break-after: always"></div>
 
@@ -247,19 +248,19 @@ a course as long as the new course name is not a duplicate in the existing cours
 #### Parsing user input
 1. The user inputs `edit` and provides the `INDEX` of the course to edit, and the `c/NEW_COURSENAME` of the existing course.
 2. The `CodeSphereParser` then does preliminary processing to the user input and creates a new `EditCourseCommandParser`.
-3. The `EditCourseCommandParesr` parses the user input and checks if the input `INDEX` is valid by calling `ParserUtil#parseIndex()`. If invalid, a `ParseException` is thrown.
+3. The `EditCourseCommandParesr` parses the user input and checks if the input `INDEX` is valid by calling `ParserUtil#parseIndex()`.
 4. `EditCourseCommandParesr` then checks if the prefix `c/` is present and there is only one such prefix present. If not, a `ParseException` will be thrown.
 5. `EditCourseCommandParser` will then call `ParserUtil#parseCourseName` to verify if the input `NEW_COURSENAME` is valid. If invalid, a `ParseException` will be thrown.
 6. An `EditCourseDescriptor` is then created with the `NEW_COURSENAME`.
-7. A check will be done to see if there was a change in the course name. If not, a `ParseException` is thrown.
-8. An `EditCourseCommand` is then created with the respective index and `EditCourseDescriptor`.
+7. A check will be done to see if there was a change in the course name.
+8. An `EditCourseCommand` is created with the index and `EditCourseDescriptor`.
 
 #### Command Execution
 1. The `LogicManager` executes the `EditCourseCommand`.
 2. The `EditCourseCommand` creates an `editedCourse` with the new course name.
 3. `EditCourseCommand` then calls `Model#hasCourse()` to check for duplicate courses. If duplicate present, a `CommandException` is thrown.
-4. `Model#setCourse()` will then be called to replace the existing course with the `editedCourse`.
-5. `Model#updateFilteredCourseList()` will then be called to update the filtered course list.
+4. `Model#setCourse()` is called to replace the target course with `editedCourse`.
+5. `Model#updateFilteredCourseList()` is called to update the filtered list.
 
 #### Displaying of result
 1. Lastly, the `EditCourseCommand` creates a `CommandResult` with a success message and return it to the `LogicManager` to complete the command execution.
@@ -294,6 +295,8 @@ a course as long as the index is valid.
 3. `Model#deleteCourse()` will then be called to delete the target course from the displayed course list.
 4. `Model#resetFilteredCourseList()` will then be called to update the filtered course list.
 
+<div style="page-break-after: always"></div>
+
 #### Displaying of result
 1. Lastly, the `DeleteCourseCommand` creates a `CommandResult` with a success message and return it to the `LogicManager` to complete the command execution.
    The GUI will also be updated accordingly as it calls the `filteredCourseList` which was updated during the execution of the command.
@@ -304,7 +307,7 @@ The following sequence diagram shows how the `delete` mechanism in the home page
 The following activity diagram summarises what happens when a user executes the `delete` command:
 ![DeleteCourseActivityDiagram](images/DeleteCourseActivityDiagram.png)
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Implementation of Course Commands**
@@ -428,6 +431,8 @@ There are multiple different predicate classes created to accurately filter thro
 If the conditions are not met a `ParseException` is thrown.
 4. If the format is valid, a predicate class matching the prefix is created. For example, for `NAME`, the predicate object created is `NameContainsKeywordsPredicate`. This class takes in the values of the keywords and the object is passed into the newly created `FindCommand` object.
 
+<div style="page-break-after: always"></div>
+
 #### Command execution
 1. The `LogicManager` executes the `FindCommand`.
 2. The `FindCommand` calls the `Model#updateFilteredStudentList()` to update the filtered student list based on predicate class.
@@ -466,7 +471,8 @@ The following activity diagram summarizes what happens when a user executes the 
 
 These considerations and alternatives should be weighed based on the specific requirements and expected user experience in your application.
 You can copy and paste this code into a Markdown editor or file to render the formatted text.
---------------------------------------------------------------------------------------------------------------------
+
+
 <div style="page-break-after: always"></div>
 
 ## **Implementation of other notable features**
@@ -497,6 +503,8 @@ If the command history is at its latest command, the `CommandBox` will be set to
 When an input is displayed, it will be displayed on the `CommandBox` and overwrite any text previously typed into it.
 If the input is recognised as invalid, the text displayed will be coloured red, or otherwise it will be displayed in the default white colour.
 
+<div style="page-break-after: always"></div>
+
 #### Design considerations
 **Aspect:** Whether we should store and display all user inputs or just valid commands
 
@@ -519,7 +527,7 @@ If the input is recognised as invalid, the text displayed will be coloured red, 
       - Users are unable to edit or view previously entered inputs, requiring them to re-type their entire command if
       they initially inputted it wrongly
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Documentation, logging, testing, configurations, dev-ops**
@@ -529,7 +537,7 @@ If the input is recognised as invalid, the text displayed will be coloured red, 
 * [Configurations guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Appendix: Requirements**
@@ -658,6 +666,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1b1. CodeSphere displays an error message.<br>
       Use case resumes at step 1.
 
+<div style="page-break-after: always"></div>
+
 **Use case: UC05 - Sort the student list**
 
 **MSS**
@@ -697,7 +707,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Mainstream OS**: Windows, Linux, Unix, OS-X
 * **CLI**: Command Line Interface. A way to interact with a computer or software by typing text-based commands, rather than using a mouse and graphical icons.
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Appendix: Instructions for manual testing**
@@ -1034,7 +1044,7 @@ More information on usage: [find Finding a student](#finding-a-student--find)
        Expected: No student filtered. Error details shown in the error message.
 
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Appendix: Effort**
@@ -1077,7 +1087,7 @@ for a command (i.e. `add` will now perform `addStudent` or `addCourse` depending
     and our individual portfolios have been kept updated.  
     
 
---------------------------------------------------------------------------------------------------------------------
+
 <div style="page-break-after: always"></div>
 
 ## **Appendix: Planned Enhancements**
